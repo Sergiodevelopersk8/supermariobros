@@ -47,7 +47,10 @@ game.anims.create({
   frameRate: 12,  
   repeat: -1
 })
-
+game.anims.create({
+  key: 'mario-grown-idle',
+  frame:0
+})
 
 
   }

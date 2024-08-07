@@ -33,15 +33,18 @@ this.load.image(
 )
 
 
-
-
-
-
 this.load.image(
   'floorbricks',
   '../assets/scenery/overworld/floorbricks.png'
   
 )
+
+this.load.image(
+  'supermushroom',
+  '../assets/collectibles/super-mushroom.png'
+)
+
+
 
 initSpritesheet(this)
 
@@ -88,10 +91,11 @@ function create(){
   .setVelocityX(-50)
   this.enemy.anims.play('goomba-walk',true)
 
-  this.coins = this.physics.add.staticGroup()
-  this.coins.create(150,150, 'coin').anims.play('coin-idle',true)
-  this.coins.create(300,150, 'coin').anims.play('coin-idle',true)
-  this.physics.add.overlap(this.mario, this.coins, collectionCoin, null, this)
+  this.collectibles = this.physics.add.staticGroup()
+  this.collectibles.create(150,150, 'coin').anims.play('coin-idle',true)
+  this.collectibles.create(300,150, 'coin').anims.play('coin-idle',true)
+  this.collectibles.create(200,config.height - 40, 'supermushroom').anims.play('supermushroom-idle',true)
+  this.physics.add.overlap(this.mario, this.collectibles, collectionItem, null, this)
  
 
   this.physics.world.setBounds(0, 0, 2000, config.height)
@@ -111,9 +115,54 @@ function create(){
 }
 
 
-function collectionCoin(mario, coin){
-  coin.destroy()
+function collectionItem(mario, item){
+
+  const {texture: { key } } = item
+
+  if(key === 'coin'){
+
+  item.destroy()
+  playAudio('coin-pickup',this,{volume:0.1})
+  addToScore(100,item,this)
 }
+
+else if(key === 'supermushroom'){
+
+}
+
+
+}
+
+
+function addToScore(scoreToAdd, origin, game){
+
+  const scoreText = game.add.text(
+    origin.x, 
+    origin.y,
+    scoreToAdd,
+    {fontFamily:'pixel',fontSize:config.width / 40})
+
+
+  game.tweens.add({
+    targets:scoreText,
+    duration:500,
+    y:scoreText.y - 20,
+    onComplete:() =>{
+      game.tweens.add({
+      targets: scoreText,
+      duration:100,
+      alph:0,
+      onComplete:() =>{
+        scoreText.destroy()
+      }
+    })
+    }
+  })
+
+
+
+}
+
 
 
 function onHitEnemy(mario, enemy){
@@ -123,6 +172,7 @@ if(mario.body.touching.down && enemy.body.touching.up){
     enemy.setVelocityX(0)
     mario.setVelocityY(-200)
     playAudio('goomba-stomp',this)
+    addToScore(200,enemy,this)
     setTimeout(()=>{
     enemy.destroy();
 

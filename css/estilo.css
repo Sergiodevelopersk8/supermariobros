@@ -1,10 +1,17 @@
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'pixel';
+    src: url('../assets/fonts/SuperMario.ttf');
+}
+
 body{
+    font-family: 'pixel',sans-serif;
     display: grid;
     height: 100vh;
     background-color: black;
