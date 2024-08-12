@@ -132,8 +132,27 @@ else if(key === 'supermushroom'){
 
   this.physics.world.pause()
   this.anims.pauseAll()
-  this.mario.isGrown = true
-  mario.anims.play('mario-grown-idle',true)
+
+  this.mario.isBlocked = true
+  
+let i = 0;
+const interval = setInterval(() => {
+mario.anims.play( i % 2 === 0
+  ? 'mario-grown-idle'
+  : 'mario-idle'
+)
+  i++
+
+
+},100)
+
+setTimeout(()=>{
+  mario.isGrown = true
+  mario.isBlocked = false
+  clearInterval(interval)
+  this.physics.world.resume()
+  this.anims.resumeAll()
+},1000)
 
 }
 
