@@ -23,10 +23,9 @@ export function checkControls ({mario, keys}){
   
     if(mario.isDead) return
     
-    const marioAnimations = mario.isGrown 
-    ? MARIO_ANIMATIONS.grown 
-    : MARIO_ANIMATIONS.normal
-  
+    const marioAnimations = mario.isGrown
+    ? MARIO_ANIMATIONS.grown : MARIO_ANIMATIONS.normal 
+
 
     
   if(isLeftKeyDown ){

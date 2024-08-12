@@ -132,7 +132,7 @@ else if(key === 'supermushroom'){
 
   this.physics.world.pause()
   this.anims.pauseAll()
-  mario.isGrown = true
+  this.mario.isGrown = true
   mario.anims.play('mario-grown-idle',true)
 
 }
