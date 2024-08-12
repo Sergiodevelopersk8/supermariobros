@@ -95,6 +95,7 @@ function create(){
   this.collectibles.create(150,150, 'coin').anims.play('coin-idle',true)
   this.collectibles.create(300,150, 'coin').anims.play('coin-idle',true)
   this.collectibles.create(200,config.height - 40, 'supermushroom').anims.play('supermushroom-idle',true)
+
   this.physics.add.overlap(this.mario, this.collectibles, collectionItem, null, this)
  
 
@@ -118,15 +119,21 @@ function create(){
 function collectionItem(mario, item){
 
   const {texture: { key } } = item
+  item.destroy()
 
   if(key === 'coin'){
 
-  item.destroy()
+ 
   playAudio('coin-pickup',this,{volume:0.1})
   addToScore(100,item,this)
 }
 
 else if(key === 'supermushroom'){
+
+  this.physics.world.pause()
+  this.anims.pauseAll()
+  mario.isGrown = true
+  mario.anims.play('mario-grown-idle',true)
 
 }
 

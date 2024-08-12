@@ -25,7 +25,8 @@ const INIT_SPRITESHEETS=[
       {
         key:'mario-grown',
         path:'../assets/entities/mario-grown.png',
-        
+        frameWidth:18, 
+        frameHeight:32
 
       }
 
